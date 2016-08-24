@@ -1,0 +1,8 @@
+#!/bin/sh
+export HOME=/usr/src/app
+export USER_ID=`ls -n $HOME | head -n 2 | tail -n 1 |awk '{print $3}'`
+export GROUP_ID=`ls -n $HOME | head -n 2 | tail -n 1 |awk '{print $4}'`
+addgroup -g $GROUP_ID user
+adduser -G user -D -u $USER_ID user
+echo "Going to gosu: $@"
+exec /usr/local/bin/gosu user "$@"
